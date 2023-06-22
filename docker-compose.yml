@@ -1,0 +1,60 @@
+version: '2.3'
+
+# create default network
+networks:
+  default:
+    external:
+      name: ros-network
+
+volumes:
+  workspace:
+
+services:
+
+  master:
+    image: ros:noetic-ros-core-focal
+    container_name: ros1_master
+    init: true
+    restart: always
+    #network_mode: host
+    command: roscore
+    expose:
+      - 11311
+    ports:
+      - "11311:11311"
+
+  ros1:
+    build: ./image
+    image: wn1980/ros1-noetic${TAG}
+    container_name: ros1_noetic
+    init: true
+    restart: unless-stopped
+    privileged: true
+    #depends_on: 
+    #  - master
+    environment:
+      - DISPLAY=:9
+      - ROS_MASTER_URI=http://master:11311
+      #- QT_X11_NO_MITSHM=1
+      #- TURTLEBOT_3D_SENSOR=asus_xtion_pro
+    devices:
+      - "/dev:/dev"
+      - "/dev/snd:/dev/snd"
+    volumes:
+      - "/dev:/dev"
+      - "/dev/snd:/dev/snd"
+      - "/run/systemd:/run/systemd"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "workspace:/workspace"
+      - "./asoundrc.txt:/home/developer/.asoundrc:rw"
+      - "~/.gitconfig:/home/developer/.gitconfig"
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /tmp/.X11-unix/X9"]
+      interval: "1m"
+      retries: 20
+    expose:
+      - 11345
+    ports:
+      - "8557:8008"
+      - "9901:6901"
+      - "11345:11345"
