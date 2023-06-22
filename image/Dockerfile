@@ -187,7 +187,7 @@ RUN rosdep fix-permissions && rosdep update
 #    echo "export LESSOPEN='|pygmentize -g %s'" >> ~/.bash_profile
 
 # enable bash completion
-RUN echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
+RUN echo "\n\n\nsource /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
     #git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it && \
     #~/.bash_it/install.sh --silent && \
     #rm ~/.bashrc.bak && \
@@ -226,11 +226,20 @@ RUN cd $HOME/catkin_ws && \
 	#rm -rf /catkin_ws && \
     echo "DONE"
 
+# dowload OpenCR firmware
+RUN wget https://github.com/ROBOTIS-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2  && \
+    tar -xvf opencr_update.tar.bz2 && \
+    rm -rf ./opencr_update.tar.bz2
+
 # https://superuser.com/questions/555310/bash-save-history-without-exit
 RUN echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc && \ 
-    echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
+    echo "\n\n\nsource /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
     echo "source $HOME/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
-    echo "export TURTLEBOT_BASE=kobuki" >> ~/.bashrc && \
+    echo "\n\n\nexport OPENCR_PORT=/dev/opencr" >> ~/.bashrc && \
+    echo "export OPENCR_MODEL=burger_noetic" >> ~/.bashrc && \
+    echo "\n\n\nexport TURTLEBOT3_MODEL=burger" >> ~/.bashrc && \
+    echo "export LDS_MODEL=LDS-02" >> ~/.bashrc && \
+    echo "\n\n\nexport TURTLEBOT_BASE=kobuki" >> ~/.bashrc && \
     echo "export TURTLEBOT_3D_SENSOR=asus_xtion_pro" >> ~/.bashrc && \
     echo "export TURTLEBOT_MAP_FILE=~/workspace/maps/map.yaml" >> ~/.bashrc
 
