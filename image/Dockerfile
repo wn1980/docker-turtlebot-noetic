@@ -108,7 +108,7 @@ RUN apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # update pip and install some packages
-RUN curl https://bootstrap.pypa.io//get-pip.py | python - && \
+RUN curl https://bootstrap.pypa.io/get-pip.py | python - && \
     #curl https://bootstrap.pypa.io/pip/2.7/get-pip.py | python - && \
     pip install -U --no-cache-dir \
         pyserial \
@@ -237,6 +237,7 @@ RUN echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc && \
 VOLUME /tmp/.X11-unix
 
 COPY ./app /app
+COPY ./index.html /usr/share/novnc
 
 RUN sudo chown -R developer:developer /app
 
