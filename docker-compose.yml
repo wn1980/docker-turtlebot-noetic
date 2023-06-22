@@ -3,8 +3,8 @@ version: '2.3'
 # create default network
 networks:
   default:
-    external:
-      name: ros-network
+    name: ros-network
+    external: true
 
 volumes:
   workspace:
@@ -24,7 +24,7 @@ services:
       - "11311:11311"
 
   ros1:
-    build: ./image
+    #build: ./image
     image: wn1980/ros1-noetic${TAG}
     container_name: ros1_noetic
     init: true
