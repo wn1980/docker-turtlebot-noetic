@@ -217,6 +217,12 @@ RUN mkdir -p $HOME/catkin_ws/src
 # compile turtlebot2 packages from sources
 #COPY ./app/install/turtlebot2.sh /
 
+
+# download example code
+RUN git clone https://github.com/Apress/Robot-Operating-System-Abs-Begs.git && \
+    mv -f Robot-Operating-System-Abs-Begs/chapter_5/hello_world $HOME/catkin_ws/src && \
+    rm -rf Robot-Operating-System-Abs-Begs
+
 RUN cd $HOME/catkin_ws && \
     #bash /turtlebot2.sh && \
     #sudo rm -f /turtlebot2.sh && \
