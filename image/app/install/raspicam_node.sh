@@ -19,3 +19,5 @@ if [ ! -d "raspicam_node" ]; then
 fi
 
 cd ~/catkin_ws && catkin_make
+
+sudo usermod -aG video $USER
