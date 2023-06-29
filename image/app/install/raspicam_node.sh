@@ -2,6 +2,8 @@
 
 set -e
 
+sudo usermod -aG video $(whoami)
+
 source /opt/ros/$ROS_DISTRO/setup.bash
 
 sudo apt-get update && \
@@ -19,5 +21,3 @@ if [ ! -d "raspicam_node" ]; then
 fi
 
 cd ~/catkin_ws && catkin_make
-
-sudo usermod -aG video $USER
