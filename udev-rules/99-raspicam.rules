@@ -1,0 +1,4 @@
+#sudo udevadm control --reload-rules
+#sudo udevadm trigger
+
+SUBSYSTEM=="vchiq", MODE="0666"

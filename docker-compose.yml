@@ -40,10 +40,14 @@ services:
     devices:
       - "/dev:/dev"
       - "/dev/snd:/dev/snd"
+      - "/dev/vchiq:/dev/vchiq"
     volumes:
       - "/dev:/dev"
       - "/dev/snd:/dev/snd"
       - "/run/systemd:/run/systemd"
+      - "/bin/systemctl:/bin/systemctl"
+      - "/var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket"
+      - "/sys/fs/cgroup:/sys/fs/cgroup"
       - "/etc/localtime:/etc/localtime:ro"
       - "workspace:/workspace"
       - "./asoundrc.txt:/home/developer/.asoundrc:rw"
